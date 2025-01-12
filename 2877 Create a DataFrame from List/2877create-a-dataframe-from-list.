@@ -1,0 +1,8 @@
+import pandas as pd
+
+def createDataframe(student_data: List[List[int]]) -> pd.DataFrame:
+    data = { 
+        'student_id': [n for (n, _) in student_data], 
+        'age': [n for (_, n) in student_data],
+    }
+    return pd.DataFrame(data=data)

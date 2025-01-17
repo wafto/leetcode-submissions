@@ -1,10 +1,11 @@
 class Solution:
     def runningSum(self, nums: List[int]) -> List[int]:
-        output = [0] * len(nums)
+        n = len(nums)
+        ans = [0] * n
         
-        count = 0
-        for i in range(len(nums)):
-            count += nums[i]
-            output[i] = count
-
-        return output 
+        acc = 0
+        for i in range(n):
+            acc += nums[i]
+            ans[i] = acc
+            
+        return ans

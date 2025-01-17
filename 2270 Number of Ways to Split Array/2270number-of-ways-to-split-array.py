@@ -1,19 +1,16 @@
 class Solution:
     def waysToSplitArray(self, nums: List[int]) -> int:
-        size = len(nums)
+        n = len(nums)
+        ps = [0] * n
 
-        count = 0
-        for i in range(size):
-            count += nums[i]
-            nums[i] = count
+        acc = 0
+        for i in range(n):
+            acc += nums[i]
+            ps[i] += acc
 
-        res = 0
-        for i in range(1, size):
-            left = nums[i - 1]
-            right = count - left
-            if left >= right:
-                res += 1
+        ans = 0
+        for i in range(n - 1):
+            if ps[i] >= acc - ps[i]:
+                ans += 1
 
-        return res
-
-
+        return ans

@@ -4,6 +4,7 @@ class Solution:
         Do not return anything, modify nums in-place instead.
         """
         left = 0
+
         for right in range(len(nums)):
             if nums[right] != 0:
                 nums[left] = nums[right]
@@ -11,5 +12,4 @@ class Solution:
 
         while left < len(nums):
             nums[left] = 0
-            left += 1 
-        
+            left += 1

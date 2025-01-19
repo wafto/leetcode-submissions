@@ -9,5 +9,5 @@ class Solution:
                 minimal = min(minimal, right - left + 1)
                 total -= nums[left]
                 left += 1
-        
+
         return minimal if minimal <= len(nums) else 0

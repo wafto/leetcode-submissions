@@ -1,13 +1,13 @@
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
-        letters = { chr(n): 0 for n in range(97, 123) }
+        h = [0] * 26
         
         for c in magazine:
-            letters[c] += 1
+            h[ord(c) - 97] += 1
 
         for c in ransomNote:
-            if letters[c] == 0:
+            if h[ord(c) - 97] == 0:
                 return False
-            letters[c] -= 1
+            h[ord(c) - 97] -= 1
 
         return True

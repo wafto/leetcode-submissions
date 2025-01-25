@@ -1,11 +1,9 @@
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
-        st = set()
+        acc = nums[0]
 
-        for n in nums:
-            if n in st:
-                st.remove(n)
-            else:
-                st.add(n)
+        for i in range(1, len(nums)):
+            acc = acc ^ nums[i]
 
-        return st.pop()
+        return acc
+

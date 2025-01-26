@@ -3,15 +3,16 @@ class Solution:
         queue = deque()
         answer = []
 
-        for i in range(len(nums)):
-            while queue and nums[queue[-1]] < nums[i]:
+        for i, n in enumerate(nums):
+            while queue and n > nums[queue[-1]]:
                 queue.pop()
+            
             queue.append(i)
-
+            
             if queue[0] + k == i:
                 queue.popleft()
 
-            answer.append(nums[queue[0]])
+            if i >= k - 1:
+                answer.append(nums[queue[0]])
 
-        return answer[k-1:]
-
+        return answer

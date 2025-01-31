@@ -11,17 +11,15 @@ class Solution:
 
         queue = deque()
         queue.append(root)
-        output = []
+        view = []
 
         while queue:
-            last = None
-            for i in range(len(queue)):
+            view.append(queue[-1].val)
+            for _ in range(len(queue)):
                 node = queue.popleft()
-                last = node.val
                 if node.left:
                     queue.append(node.left)
                 if node.right:
                     queue.append(node.right)
-            output.append(last)
-
-        return output
+        
+        return view

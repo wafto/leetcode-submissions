@@ -10,7 +10,7 @@ class Solution:
         def dfs(node: Optional[TreeNode]) -> int:
             if not node:
                 return 0
-
+            
             if not node.left and not node.right:
                 return 1
             
@@ -21,6 +21,5 @@ class Solution:
                 return 1 + dfs(node.left)
 
             return 1 + min(dfs(node.left), dfs(node.right))
-
 
         return dfs(root)

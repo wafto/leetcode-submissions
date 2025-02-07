@@ -6,8 +6,9 @@ class Solution:
         for i in range(n):
             costs[i] = abs(ord(s[i]) - ord(t[i]))
 
+        
         left, curr = 0, 0
-        maximum = 0
+        ans = 0
 
         for right in range(n):
             curr += costs[right]
@@ -16,7 +17,6 @@ class Solution:
                 curr -= costs[left]
                 left += 1
 
-            maximum = max(maximum, right - left + 1)
+            ans = max(ans, right - left + 1)
 
-        return maximum
-
+        return ans

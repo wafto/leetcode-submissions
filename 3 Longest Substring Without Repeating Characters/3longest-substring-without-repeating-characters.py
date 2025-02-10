@@ -1,7 +1,7 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        left, longest = 0, 0
-        chars = set()
+        left, chars = 0, set()
+        longest = 0
 
         for right, char in enumerate(s):
             while char in chars:

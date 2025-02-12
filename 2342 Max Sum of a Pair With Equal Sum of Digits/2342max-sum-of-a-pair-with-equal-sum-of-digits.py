@@ -1,25 +1,23 @@
 class Solution:
-
     def maximumSum(self, nums: List[int]) -> int:
-        hashmap = {}
-        ans = -1
+        mapping = dict()
+        maximum = -1
 
-        def digitsum(num: int) -> int:
-            total = 0
-            while num:
-                total += num % 10
-                num //= 10
-            return total
+        def digit_sum(n: int) -> int:
+            ans = 0
+            while n > 0:
+                ans += n % 10
+                n //= 10
+            return ans
 
         for num in nums:
-            sd = digitsum(num)
-
-            if sd not in hashmap:
-                hashmap[sd] = num
+            dsum = digit_sum(num)
+            
+            if dsum in mapping:
+                maximum = max(maximum, mapping[dsum] + num)
+                mapping[dsum] = max(mapping[dsum], num)
             else:
-                hashv = hashmap[sd]
-                ans = max(ans, hashv + num)
-                hashmap[sd] = max(hashv, num)
+                mapping[dsum] = num
 
-        return ans
+        return maximum
             

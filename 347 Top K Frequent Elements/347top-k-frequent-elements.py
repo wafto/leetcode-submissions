@@ -1,19 +1,11 @@
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        mapping = {}
+        counter = Counter(nums)
+        heap = []
 
-        for n in nums:
-            mapping[n] = 1 + mapping.get(n, 0)
+        for num, count in counter.items():
+            heapq.heappush(heap, (count, num))
+            if len(heap) > k:
+                heapq.heappop(heap)
 
-        bucket = [[] for _ in range(len(nums) + 1)]
-        for key, val in mapping.items():
-            bucket[val].append(key)
-        
-        output = []
-        for i in range(len(bucket) - 1, -1, -1):
-            if bucket[i]:
-                output.extend(bucket[i])
-            if len(output) >= k:
-                break
-
-        return output[0:k]
+        return [e[1] for e in heap]

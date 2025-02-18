@@ -1,20 +1,21 @@
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        left = 1
-        right = max(piles)
-        output = right
+        left, right = 1, max(piles)
+
+        def eatable_bananas(k: int) -> bool:
+            total = 0
+            for pile in piles:
+                total += ceil(pile / k)
+            return total <= h
 
         while left <= right:
-            k = left + (right - left) // 2
+            mid = (right + left) // 2
 
-            time = 0
-            for pile in piles:
-                time += math.ceil(float(pile) / k)
-
-            if time > h:
-                left = k + 1
+            if eatable_bananas(mid):
+                right = mid - 1
             else:
-                output = k
-                right = k - 1
+                left = mid + 1
 
-        return output
+        return left
+
+        

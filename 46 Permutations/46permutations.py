@@ -1,15 +1,17 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        permutations = [[]]
+        ans = []
 
-        for num in nums:
-            npermutations = []
-            for perm in permutations:
-                for i in range(len(perm) + 1):
-                    cp = perm.copy()
-                    cp.insert(i, num)
-                    npermutations.append(cp)
-            permutations = npermutations
+        def backtrack(curr: List[int]) -> None:
+            if len(curr) == len(nums):
+                ans.append(curr.copy())
+                return
 
-        return permutations
+            for num in nums:
+                if num not in curr:
+                    curr.append(num)
+                    backtrack(curr)
+                    curr.pop()
             
+        backtrack([])
+        return ans

@@ -1,14 +1,13 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        memo = {0: 0, 1: 1, 2: 2, 3: 3}
-
-        def dfs(stairs: int) -> int:
-            if stairs in memo:
-                return memo[stairs]
-            
-            memo[stairs] = dfs(stairs - 1) + dfs(stairs - 2)
-
-            return memo[stairs]
-
-        return dfs(n)
         
+        @cache
+        def dp(i: int) -> int:
+            if i == 1:
+                return 1
+            if i == 2:
+                return 2
+
+            return dp(i - 1) + dp(i - 2)
+
+        return dp(n)

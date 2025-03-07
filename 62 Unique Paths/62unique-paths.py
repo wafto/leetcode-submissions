@@ -1,21 +1,14 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        rows, cols = m, n
-        memo = [[0] * cols for _ in range(rows)]
-        
-        def paths(r: int, c: int) -> int:
-            if r >= rows or c >= cols:
-                return 0
-            
-            if memo[r][c] != 0:
-                return memo[r][c]
+        prev = [0] * (n + 1)
 
-            if r == rows - 1 or c == cols - 1:
-                memo[r][c] = 1
-                return memo[r][c]
+        for r in range(m - 1, -1, -1):
+            curr = [0] * (n + 1)
+            for c in range(n - 1, -1, -1):
+                if r == m - 1 and c == n - 1:
+                    curr[c] = 1
+                else:
+                    curr[c] = prev[c] + curr[c + 1]
+            prev = curr
 
-            memo[r][c] = paths(r + 1, c) + paths(r, c + 1)
-            return memo[r][c]
-        
-        paths(0, 0)
-        return memo[0][0]
+        return prev[0]        

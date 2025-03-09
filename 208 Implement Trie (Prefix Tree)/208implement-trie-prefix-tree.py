@@ -1,35 +1,36 @@
 class TrieNode:
     def __init__(self):
-        self.mapping = {}
+        self.children = {}
         self.word = False
 
 class Trie:
     def __init__(self):
-        self.head = TrieNode()
+        self.root = TrieNode() 
 
     def insert(self, word: str) -> None:
-        curr = self.head
+        curr = self.root
         for c in word:
-            if c not in curr.mapping:
-                curr.mapping[c] = TrieNode()
-            curr = curr.mapping[c]
+            if c not in curr.children:
+                curr.children[c] = TrieNode()
+            curr = curr.children[c]
         curr.word = True
 
     def search(self, word: str) -> bool:
-        curr = self.head
+        curr = self.root
         for c in word:
-            if c not in curr.mapping:
+            if c not in curr.children:
                 return False
-            curr = curr.mapping[c]
+            curr = curr.children[c]
         return curr.word
 
     def startsWith(self, prefix: str) -> bool:
-        curr = self.head
+        curr = self.root
         for c in prefix:
-            if c not in curr.mapping:
+            if c not in curr.children:
                 return False
-            curr = curr.mapping[c]
+            curr = curr.children[c]
         return True
+        
 
 
 # Your Trie object will be instantiated and called as such:

@@ -1,17 +1,16 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        a = [0] * 26
-        b = [0] * 26
-
-        if len(s) != len(t):
+        ns, nt = len(s), len(t)
+        ord_a = ord('a')
+        
+        if ns != nt:
             return False
+        
+        freq_s, freq_t = [0] * 26, [0] * 26
+        
+        for i in range(ns):
+            freq_s[ord(s[i]) - ord_a] += 1
+            freq_t[ord(t[i]) - ord_a] += 1
 
-        for i in range(len(s)):
-            a[ord(s[i]) - 97] += 1
-            b[ord(t[i]) - 97] += 1
-
-        for i in range(26):
-            if a[i] != b[i]:
-                return False
-
-        return True
+        return freq_s == freq_t
+    

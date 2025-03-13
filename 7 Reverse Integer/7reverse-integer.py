@@ -1,8 +1,22 @@
 class Solution:
     def reverse(self, x: int) -> int:
-        output = int(str(abs(x))[::-1]) * (-1 if x < 0 else 1)
+        neg = x < 0
+        if neg:
+            x = -x
 
-        if output > (2 ** 31) - 1 or output < -2 ** 31:
+        queue = deque()
+        while x > 0:
+            queue.append(x % 10)
+            x //= 10
+
+        ans, n = 0, len(queue)
+        for i in range(n):
+            ans += queue[i] * (10 ** (n - i - 1))
+
+        if ans >= (2 ** 31) - 1:
             return 0
 
-        return output
+        return -ans if neg else ans
+        
+            
+        

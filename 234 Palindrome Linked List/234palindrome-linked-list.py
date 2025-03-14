@@ -10,6 +10,7 @@ class Solution:
 
         while fast and fast.next:
             fast = fast.next.next
+            
             tmp = slow.next
             slow.next = prev
             prev = slow
@@ -17,11 +18,11 @@ class Solution:
 
         if fast:
             slow = slow.next
-
-        while slow and prev:
-            if slow.val != prev.val:
+            
+        while prev and slow:
+            if prev.val != slow.val:
                 return False
-            slow = slow.next
             prev = prev.next
+            slow = slow.next
 
         return True

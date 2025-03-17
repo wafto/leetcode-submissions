@@ -1,17 +1,24 @@
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        size = len(s)
-        longest = ""
+        n, longest = len(s), s[0]
 
-        if size == 1 or s == s[::-1]:
-            return s
+        def palindrome(l: int, r: int) -> bool:
+            while l < r:
+                if s[l] != s[r]:
+                    return False
+                l, r = l + 1, r - 1
+            return True
 
-        for i in range(size):
-            j = size - 1
-            while j > 0:
-                sub = s[i: j + i]
-                if len(sub) > len(longest) and sub == sub[::-1]:
-                    longest = sub
-                j -= 1
-        
+        if n == 1:
+            return longest
+
+        if n == 2:
+            return s if palindrome(0, 1) else longest
+
+        for i in range(n):
+            for j in range(i, n):
+                if j - i + 1 > len(longest) and palindrome(i, j):
+                    longest = s[i: j + 1]
+
         return longest
+        

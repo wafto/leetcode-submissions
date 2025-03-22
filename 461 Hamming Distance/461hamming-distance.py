@@ -1,10 +1,11 @@
 class Solution:
     def hammingDistance(self, x: int, y: int) -> int:
-        bits = x ^ y
+        num = x ^ y
         ans = 0
         
-        while bits > 0:
-            ans += bits & 1
-            bits >>= 1
-
+        while num > 0:
+            ans += num & 1
+            num >>= 1
+            
         return ans
+    

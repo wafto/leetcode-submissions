@@ -1,12 +1,10 @@
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
-        n = len(nums)
-        existing = set(nums)
+        missing = len(nums)
         
-        for i in range(n + 1):
-            if i not in existing:
-                return i
+        for i, n in enumerate(nums):
+            missing ^= i ^ n
             
-        return -1
-        
+        return missing
+
         

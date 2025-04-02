@@ -1,25 +1,20 @@
 class Solution:
     def gcdOfStrings(self, str1: str, str2: str) -> str:
-        s1, s2 = len(str1), len(str2)
-        shortest = str2 if s2 < s1 else str1
+        n1, n2 = len(str1), len(str2)
+        smallest = str1 if n1 < n2 else str2
+        
+        def valid(i: int) -> bool:
+            if n1 % i or n2 % i:
+                return False
+            sub = smallest[:i]
+            d1, d2 = n1 // i, n2 // i
 
-        for i in range(len(shortest), 0, -1):
-            gcd = shortest[:i]
+            return str1 == sub * d1 and str2 == sub * d2
 
-            if s1 % len(gcd) != 0 or s2 % len(gcd) != 0:
-                continue
-
-            if not str1.startswith(gcd) or not str2.startswith(gcd):
-                continue
-            
-            large = gcd * (max(s1, s2) // len(gcd))
-
-            if large[:s1] == str1 and large[:s2] == str2:
-                return gcd
-
+        for i in range(min(n1, n2), 0, -1):
+            if valid(i):
+                return smallest[:i]
+        
         return ''
 
-
-
-
-
+        

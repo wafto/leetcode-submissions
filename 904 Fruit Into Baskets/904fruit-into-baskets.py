@@ -1,17 +1,20 @@
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
-        ans, left = 0, 0
-        types = defaultdict(int)
+        n, left, maximal = len(fruits), 0, 0
+        hashmap = defaultdict(int)
 
-        for right in range(len(fruits)):
-            types[fruits[right]] += 1
-            
-            while len(types) > 2:
-                types[fruits[left]] -= 1
-                if types[fruits[left]] == 0:
-                    del types[fruits[left]]
+        for right in range(n):
+            hashmap[fruits[right]] += 1
+
+            while len(hashmap) > 2:
+                if hashmap[fruits[left]] == 1:
+                    del hashmap[fruits[left]]
+                else:
+                    hashmap[fruits[left]] -= 1
                 left += 1
 
-            ans = max(ans, right - left + 1)
+            maximal = max(maximal, right - left + 1)
 
-        return ans
+        return maximal
+        
+

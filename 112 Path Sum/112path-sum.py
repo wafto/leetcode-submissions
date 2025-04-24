@@ -9,15 +9,18 @@ class Solution:
         if not root:
             return False
 
-        target = targetSum - root.val
+        queue = deque([(root, targetSum - root.val)])
 
-        if not root.left and not root.right and target == 0:
-            return True
+        while queue:
+            node, val = queue.popleft()
+            
+            if not node.left and not node.right and val == 0:
+                return True
 
-        if self.hasPathSum(root.left, target):
-            return True
+            if node.left:
+                queue.append((node.left, val - node.left.val))
 
-        if self.hasPathSum(root.right, target):
-            return True
+            if node.right:
+                queue.append((node.right, val - node.right.val))
 
         return False

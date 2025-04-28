@@ -1,10 +1,11 @@
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
-        mapping = dict()
+        mapping = {}
 
-        for index, value in enumerate(nums):
-            if value in mapping and index - mapping[value] <= k:
+        for i, num in enumerate(nums):
+            if num in mapping and i - mapping[num] <= k:
                 return True
-            mapping[value] = index
+
+            mapping[num] = i
 
         return False

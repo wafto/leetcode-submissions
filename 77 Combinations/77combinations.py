@@ -1,16 +1,16 @@
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
-        combinations = []
+        res = []
 
-        def backtracking(curr: List[int], num: int) -> None:
+        def backtracking(num: int, curr: List[int]) -> None:
             if len(curr) == k:
-                combinations.append(curr.copy())
+                res.append(curr.copy())
                 return
 
-            for x in range(num, n + 1):
-                curr.append(x)
-                backtracking(curr, x + 1)
+            for num2 in range(num, n + 1):
+                curr.append(num2)
+                backtracking(num2 + 1, curr)
                 curr.pop()
 
-        backtracking([], 1)
-        return combinations
+        backtracking(1, [])
+        return res

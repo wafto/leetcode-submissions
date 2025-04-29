@@ -1,18 +1,19 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        subsets = []
+        sets = []
 
-        def backtracking(curr: List[int], i: int) -> None:
-            if i > len(nums):
+        def backtracking(i: int, curr: List[int]) -> None:
+            if i >= len(nums):
+                sets.append(curr.copy())
                 return
 
-            subsets.append(curr.copy())
+            # Decide not to include nums[i]
+            backtracking(i + 1, curr)
 
-            for j in range(i, len(nums)):
-                curr.append(nums[j])
-                backtracking(curr, j + 1)
-                curr.pop()    
+            # Decide to include nums[i]
+            curr.append(nums[i])
+            backtracking(i + 1, curr)
+            curr.pop()
 
-        backtracking([], 0)
-        return subsets
-            
+        backtracking(0, [])
+        return sets

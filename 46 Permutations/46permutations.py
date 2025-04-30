@@ -1,17 +1,14 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        ans = []
+        perms = [[]]
 
-        def backtrack(curr: List[int]) -> None:
-            if len(curr) == len(nums):
-                ans.append(curr.copy())
-                return
+        for num in nums:
+            nperms = []
+            for p in perms:
+                for i in range(len(p) + 1):
+                    copy = p.copy()
+                    copy.insert(i, num)
+                    nperms.append(copy)
+            perms = nperms
 
-            for num in nums:
-                if num not in curr:
-                    curr.append(num)
-                    backtrack(curr)
-                    curr.pop()
-            
-        backtrack([])
-        return ans
+        return perms

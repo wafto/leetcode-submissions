@@ -3,10 +3,8 @@ class Solution:
         robs = [0, 0]
 
         for num in nums:
-            tmp = max(robs[0] + num, robs[1])
-            robs[0] = robs[1]
-            robs[1] = tmp
+            tmp = robs[1]
+            robs[1] = max(num + robs[0], robs[1])
+            robs[0] = tmp
 
         return robs[1]
-
-        

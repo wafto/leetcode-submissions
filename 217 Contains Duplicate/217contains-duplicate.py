@@ -1,10 +1,10 @@
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        hashset = set()
+        existing: Set[int] = set()
 
         for num in nums:
-            if num in hashset:
+            if num in existing:
                 return True
-            hashset.add(num)
+            existing.add(num)
 
         return False

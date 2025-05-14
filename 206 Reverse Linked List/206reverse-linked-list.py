@@ -14,4 +14,3 @@ class Solution:
             curr = tmp
 
         return prev
-

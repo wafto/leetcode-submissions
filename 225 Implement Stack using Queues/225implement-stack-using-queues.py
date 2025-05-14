@@ -1,30 +1,26 @@
-class StackNode:
-    def __init__(self, val: int, next=None):
-        self.val = val
-        self.next = next
-
 class MyStack:
+
     def __init__(self):
-        self.head = None
+        self.first = deque()
+        self.second = deque()
 
     def push(self, x: int) -> None:
-        node = StackNode(x)
-        if self.empty():
-            self.head = node
-        else:
-            node.next = self.head
-            self.head = node
+        self.first.append(x)
 
     def pop(self) -> int:
-        node = self.head
-        self.head = self.head.next
-        return node.val      
+        while len(self.first) > 1:
+            self.second.append(self.first.popleft())
+        tmp = self.first.popleft()
+        while self.second:
+            self.first.append(self.second.popleft())
+        return tmp
 
     def top(self) -> int:
-        return self.head.val
+        return self.first[-1]        
 
     def empty(self) -> bool:
-        return self.head == None
+        return len(self.first) == 0
+        
 
 
 # Your MyStack object will be instantiated and called as such:

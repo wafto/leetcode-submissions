@@ -1,12 +1,16 @@
 class Solution:
     def generate(self, numRows: int) -> List[List[int]]:
-        ans = [[1]]
+        tri = [[1]]
 
-        for row in range(1, numRows):
-            curr = [1]
-            for i in range(1, row):
-                curr.append(ans[-1][i - 1] + ans[-1][i])
-            curr.append(1)
-            ans.append(curr)
+        for i in range(1, numRows):
+            size = i + 1
+            level = [1] * size
 
-        return ans
+            if size > 2:
+                for j in range(1, size - 1):
+                    level[j] = tri[-1][j - 1] + tri[-1][j] 
+
+            tri.append(level)
+
+        return tri
+

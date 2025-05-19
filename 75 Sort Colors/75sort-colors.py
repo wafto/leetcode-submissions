@@ -3,13 +3,16 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        bucket = [0] * 3
+        colors = [0, 0, 0]
 
-        for num in nums:
-            bucket[num] += 1
+        for color in nums:
+            colors[color] += 1
 
-        i = 0
-        for n, count in enumerate(bucket):
-            for j in range(count):
-                nums[i] = n
-                i += 1
+        i, j = 0, 0
+        while i < len(nums):
+            while j < len(colors) and colors[j] <= 0:
+                j += 1
+            nums[i] = j
+            colors[j] -= 1
+            i += 1
+

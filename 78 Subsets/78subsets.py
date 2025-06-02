@@ -1,19 +1,20 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        sets = []
+        res = []
+        n = len(nums)
 
-        def backtracking(i: int, curr: List[int]) -> None:
-            if i >= len(nums):
-                sets.append(curr.copy())
+        def dfs(i: int, curr: List[int]) -> None:
+            if i >= n:
+                res.append(curr.copy())
                 return
 
-            # Decide not to include nums[i]
-            backtracking(i + 1, curr)
+            # skip
+            dfs(i + 1, curr)
 
-            # Decide to include nums[i]
+            # take nums[i]
             curr.append(nums[i])
-            backtracking(i + 1, curr)
+            dfs(i + 1, curr)
             curr.pop()
 
-        backtracking(0, [])
-        return sets
+        dfs(0, [])
+        return res

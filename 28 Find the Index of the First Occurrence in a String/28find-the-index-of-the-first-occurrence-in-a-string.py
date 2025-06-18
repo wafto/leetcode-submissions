@@ -1,9 +1,6 @@
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
-        n, m = len(haystack), len(needle)
-
-        if n < m:
-            return -1
+        n, m = len(haystack), len(needle) 
 
         for i in range(n - m + 1):
             found = True
@@ -13,6 +10,5 @@ class Solution:
                     break
             if found:
                 return i
-
+        
         return -1
-            

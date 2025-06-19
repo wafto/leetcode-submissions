@@ -5,9 +5,7 @@ class Solution:
 
         for right in range(1, len(nums)):
             if nums[right] - nums[left] > k:
-                left = right
                 ans += 1
+                left = right
 
-        return ans 
-
-
+        return ans

@@ -1,19 +1,15 @@
 class Solution:
     def isPalindrome(self, x: int) -> bool:
-        if x == 0:
-            return True
-
-        if x < 0 or x % 10 == 0:
+        if x < 0:
             return False
-        
-        chain = str(x)
-        left = 0
-        right = len(chain) - 1
+
+        digits = str(x)
+        left, right = 0, len(digits) - 1
 
         while left < right:
-            if chain[left] != chain[right]:
+            if digits[left] != digits[right]:
                 return False
-            left += 1
-            right -= 1
+            left, right = left + 1, right - 1
 
-        return True
+        return True        
+

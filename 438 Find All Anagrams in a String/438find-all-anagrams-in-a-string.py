@@ -1,28 +1,27 @@
 class Solution:
     def findAnagrams(self, s: str, p: str) -> List[int]:
-        s1, s2 = len(s), len(p)
-        f = [0] * 26
-        output = []
-
-        for c in p:
-            f[ord(c) - 97] += 1
-
-        t = [0] * 26
-
-        for c in s[:s2]:
-            t[ord(c) - 97] += 1
+        ord_a, compare = ord('a'), [0] * 26
         
-        for i in range(s1 - s2 + 1):
-            if i > 0:
-                t[ord(s[i - 1]) - 97] -= 1
-                t[ord(s[i + s2 - 1]) - 97] += 1
-            anagram = True
-            for k in range(26):
-                if f[k] != t[k]:
-                    anagram = False
-                    break
-            if anagram: 
-                output.append(i)
+        for c in p:
+            compare[ord(c) - ord_a] += 1
 
-        return output
+        compare = tuple(compare)
+        current, left, ans = [0] * 26, 0, []
+
+        for right in range(len(s)):
+            while right - left + 1 > len(p):
+                current[ord(s[left]) - ord_a] -= 1
+                left += 1
+
+            current[ord(s[right]) - ord_a] += 1
             
+            if right - left + 1 == len(p) and compare == tuple(current):
+                ans.append(left)
+            
+        return ans
+
+
+                            
+
+
+        

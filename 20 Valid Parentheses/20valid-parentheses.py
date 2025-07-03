@@ -1,24 +1,16 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        n = len(s)
-        brackets = {'(': ')', '{': '}', '[': ']'}
+        mapping = {'(': ')', '{': '}', '[': ']'}
         stack = []
 
-        if n & 1:
-            return False
-
         for c in s:
-            if c in brackets:
+            if c in mapping:
                 stack.append(c)
-            elif stack:
-                last = stack.pop()
-                if last not in brackets:
-                    return False
-                if brackets[last] != c:
-                    return False
-            else:
+            elif not stack:
                 return False
-        
-        return not stack
+            elif mapping[stack[-1]] != c:
+                return False
+            else:
+                stack.pop()
 
-
+        return len(stack) == 0

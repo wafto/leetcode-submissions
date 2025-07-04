@@ -1,27 +1,18 @@
 class Solution:
     def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
         rows, cols = len(image), len(image[0])
-        curr = image[sr][sc]
-        stack = [(sr, sc)]
-        visited = set()
+        start = image[sr][sc]
 
-        while stack:
-            r, c = stack.pop()
-
-            if image[r][c] != curr or (r, c) in visited:
-                continue
-                
+        def dfs(r: int, c: int) -> None:
             image[r][c] = color
-            visited.add((r, c))
-            
-            if r > 0 and image[r - 1][c] == curr:
-                stack.append((r - 1, c))
-            if r < rows - 1 and image[r + 1][c] == curr:
-                stack.append((r + 1, c))
-            if c > 0 and image[r][c - 1] == curr:
-                stack.append((r, c - 1))
-            if c < cols - 1 and image[r][c + 1] == curr:
-                stack.append((r, c + 1))
-            
+
+            for nr, nc in [(r - 1, c), (r + 1, c), (r, c - 1), (r, c + 1)]:
+                if nr < 0 or nc < 0 or nr >= rows or nc >= cols or image[nr][nc] != start:
+                    continue
+                if image[nr][nc] == color:
+                    continue
+                dfs(nr, nc)
+
+        dfs(sr, sc)
+
         return image
-                

@@ -13,45 +13,30 @@ class Solution:
         if not node:
             return None
 
-        visited = set()
-        adjlist = dict()
-        queue = deque()
-        head = None
+        graph = defaultdict(list)
+        queue = deque([node])
+        visited = set([node])
 
-        visited.add(node.val)
-        queue.append(node)
-        
         while queue:
-            for _ in range(len(queue)):
-                v = queue.popleft()
-               
-                if v.val not in adjlist:
-                    adjlist[v.val] = []
-                
-                for n in v.neighbors:
-                    adjlist[v.val].append(n.val)
-                    if n.val not in visited:
-                        visited.add(n.val)
-                        queue.append(n)
+            node = queue.popleft()
 
-        mapping = dict()
+            if node.val not in graph:
+                graph[node.val] = []
+            
+            for child in node.neighbors:
+                graph[node.val].append(child.val)
+                if child in visited:
+                    continue
+                visited.add(child)
+                queue.append(child)
+
+        nodes = {i: Node(i) for i in range(1, len(graph) + 1)}
+
+        for node in nodes.values():
+            for child in graph[node.val]:
+                node.neighbors.append(nodes[child])
+
+        return nodes[1] if nodes else None
+
+
         
-        for key in adjlist:
-            if key not in mapping:
-                mapping[key] = Node(key)
-
-            if not head:
-                head = mapping[key]
-
-            for n in adjlist[key]:
-                if n not in mapping:
-                    mapping[n] = Node(n)
-                mapping[key].neighbors.append(mapping[n])
-                
-        return head
-
-
-
-
-
-

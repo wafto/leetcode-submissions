@@ -1,31 +1,33 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        mapping = {n:[] for n in range(numCourses)}
+        graph = {i: [] for i in range(numCourses)}
 
-        for course, pre in prerequisites:
-            mapping[course].append(pre)
+        for course, prereq in prerequisites:
+            graph[course].append(prereq)
 
-        visited = set()
-
-        def dfs(course: int) -> bool:
-            if course in visited:
+        def dfs(course: int, seen: Set[int]) -> bool:
+            if course in seen:
                 return False
 
-            if len(mapping[course]) == 0:
+            if not graph[course]:
                 return True
 
-            visited.add(course)
+            seen.add(course)
 
-            for pre in mapping[course]:
-                if not dfs(pre):
+            for neighbor in graph[course]:
+                if not dfs(neighbor, seen):
                     return False
-            
-            visited.remove(course)
-            mapping[course] = []
+
+            seen.remove(course)
+            graph[course] = []
             return True
 
         for course in range(numCourses):
-            if not dfs(course):
+            if not dfs(course, set()):
                 return False
 
         return True
+
+
+
+            

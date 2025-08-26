@@ -9,4 +9,8 @@ class Solution:
                 mapping[n] = num
             stack.append(num)
 
-        return list(map(lambda n: mapping.get(n, -1), nums1))
+        ans = []
+        for num in nums1:
+            ans.append(mapping.get(num, -1))
+
+        return ans

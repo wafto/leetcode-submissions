@@ -1,23 +1,22 @@
 class Solution:
     def duplicateZeros(self, arr: List[int]) -> None:
-        """
-        Do not return anything, modify arr in-place instead.
-        """
-        size = len(arr)
-        i = 0
-        
-        while i < size:
+        zeros = 0
+
+        for num in arr:
+            if num == 0:
+                zeros += 1
+
+        n = len(arr)
+        i = n - 1
+        j = n - 1 + zeros
+
+        while i != j:
+            if j < n:
+                arr[j] = arr[i]
+            j -= 1
             if arr[i] == 0:
-                j = size - 1
-                while j > i:
-                    arr[j] = arr[j - 1]
-                    j -= 1
-                arr[j] = 0
-                i += 2
-            else:
-                i += 1
-        
+                if j < n:
+                    arr[j] = arr[i]
+                j -= 1
+            i -= 1
             
-                
-            
-        

@@ -1,9 +1,10 @@
 class Solution:
     def findNumbers(self, nums: List[int]) -> int:
-        nums = [1 if len(str(n)) % 2 == 0 else 0 for n in nums]
-        even = 0
+        count = 0
+
+        for num in nums:
+            if len(str(num)) & 1 == 0:
+                count += 1
+
+        return count
         
-        for n in nums:
-            even += n
-        
-        return even

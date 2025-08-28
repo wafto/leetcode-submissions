@@ -1,9 +1,18 @@
 class Solution:
     def thirdMax(self, nums: List[int]) -> int:
-        nums = sorted(list(set(nums)), reverse=True)
-        if len(nums) >= 3:
-            return nums[2]
-        return nums[0]
-            
-        
-        
+        minheap = []
+        seen = set()
+
+        for num in nums:
+            if num in seen:
+                continue
+
+            seen.add(num)
+
+            if len(minheap) < 3:
+                heappush(minheap, num)
+            elif minheap[0] < num:
+                heappush(minheap, num)
+                heappop(minheap)
+
+        return minheap[0] if len(minheap) >= 3 else minheap[-1]

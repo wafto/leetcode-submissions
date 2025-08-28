@@ -3,12 +3,12 @@ class Solution:
         queue = deque()
         answer = []
 
-        for i, n in enumerate(nums):
-            while queue and n > nums[queue[-1]]:
+        for i, num in enumerate(nums):
+            while queue and num > nums[queue[-1]]:
                 queue.pop()
             
             queue.append(i)
-            
+
             if queue[0] + k == i:
                 queue.popleft()
 

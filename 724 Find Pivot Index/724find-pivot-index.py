@@ -1,22 +1,12 @@
 class Solution:
     def pivotIndex(self, nums: List[int]) -> int:
-        ps = [0] * len(nums)
-        pr = [0] * len(nums)
+        acc, total = 0, sum(nums)
 
-        prev = 0
-        for i in range(len(nums)):
-            prev += nums[i]
-            ps[i] = prev
-
-        prev = 0
-        for i in range(len(nums) - 1, -1, -1):
-            prev += nums[i]
-            pr[i] = prev
-
-        for i in range(len(nums)):
-            if ps[i] == pr[i]:
+        for i, num in enumerate(nums):
+            if acc == total - acc - num:
                 return i
-
+            acc += num
+        
         return -1
 
-            
+

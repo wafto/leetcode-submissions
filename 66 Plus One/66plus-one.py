@@ -1,14 +1,15 @@
 class Solution:
     def plusOne(self, digits: List[int]) -> List[int]:
-        n, acc = len(digits), 1
-        ans = deque()
+        ans, n = [], len(digits)
 
+        carry = 1
         for i in range(n - 1, -1, -1):
-            addition = digits[i] + acc
-            ans.appendleft(addition % 10)
-            acc = 1 if addition == 10 else 0
+            total = digits[i] + carry
+            carry = total // 10
+            ans.append(total % 10)
 
-        if acc:
-            ans.appendleft(1)
+        if carry:
+            ans.append(carry)
 
-        return list(ans)
+        ans.reverse()
+        return ans

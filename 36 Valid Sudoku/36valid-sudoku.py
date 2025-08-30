@@ -1,6 +1,5 @@
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        
         # rows
         for r in range(9):
             freq = [0] * 9
@@ -36,4 +35,3 @@ class Solution:
                     return False
 
         return True
-

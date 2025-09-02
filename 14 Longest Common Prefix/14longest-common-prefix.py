@@ -5,6 +5,6 @@ class Solution:
         for i in range(1, len(strs)):
             word = strs[i]
             while not word.startswith(prefix):
-                prefix = prefix[: len(prefix) - 1]
-
+                prefix = prefix[:-1]
+            
         return prefix

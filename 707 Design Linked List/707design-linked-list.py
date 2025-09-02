@@ -5,7 +5,6 @@ class ListNode:
         self.next = next
         
 class MyLinkedList:
-
     def __init__(self):
         self.head = None
         self.tail = None
@@ -111,8 +110,6 @@ class MyLinkedList:
             output.append(aux.val)
             aux = aux.next
         return output
-        
-
 
 # Your MyLinkedList object will be instantiated and called as such:
 # obj = MyLinkedList()

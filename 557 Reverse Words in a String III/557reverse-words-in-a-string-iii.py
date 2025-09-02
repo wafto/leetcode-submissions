@@ -1,20 +1,21 @@
 class Solution:
     def reverseWords(self, s: str) -> str:
-        
-        def reverse(word: str) -> str:
-            W = list(word)
-            L, R = 0, len(W) - 1
-            while L < R:
-                W[L], W[R] = W[R], W[L]
-                L += 1
-                R -= 1
-            return ''.join(W)
+        phrase = list(s)
+        n = len(phrase)
 
-        words = s.split()
-        
-        for i in range(len(words)):
-            words[i] = reverse(words[i])
+        def reverse(left: int, right: int) -> None:
+            while left < right:
+                phrase[left], phrase[right] = phrase[right], phrase[left]
+                left, right = left + 1, right - 1
 
-        return ' '.join(words)
+        left = 0
+        for right in range(n):
+            if phrase[right] == ' ' and left < n:
+                reverse(left, right - 1)
+                left = right + 1
 
+        if left < right:
+            reverse(left, right)
+
+        return ''.join(phrase)
 

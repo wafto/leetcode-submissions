@@ -1,30 +1,24 @@
 class Solution:
     def addBinary(self, a: str, b: str) -> str:
-        n, m, c = len(a), len(b), 0
-        ans = []
+        n, m = len(a), len(b)
+        i, j = n - 1, m - 1
+        ans, carry = [], 0
 
-        for i in range(max(n, m)):
-            ai = int(a[n - 1 - i]) if n - 1 - i >= 0 else 0
-            bi = int(b[m - 1 - i]) if m - 1 - i >= 0 else 0
-            num = ai + bi + c
+        while i >= 0 or j >= 0:
+            an = int(a[i]) if i >= 0 else 0
+            bn = int(b[j]) if j >= 0 else 0
+            cn = an + bn + carry
 
-            if num == 3:
-                ans.append('1')
-            elif num == 2:
+            if cn in [0, 2]:
                 ans.append('0')
-                c = 1
-            elif num == 1:
-                ans.append('1')
-                c = 0
             else:
-                ans.append('0')
-
-        if c:
+                ans.append('1')
+            
+            carry = 1 if cn > 1 else 0
+            i, j = i - 1, j - 1
+        
+        if carry:
             ans.append('1')
 
         ans.reverse()
-        
         return ''.join(ans)
-            
-
-

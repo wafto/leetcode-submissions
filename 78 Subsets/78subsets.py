@@ -1,20 +1,22 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        res = []
-        n = len(nums)
+        n, subs = len(nums), []
 
-        def dfs(i: int, curr: List[int]) -> None:
+        def backtracking(i: int, curr: List[int]) -> None:
             if i >= n:
-                res.append(curr.copy())
+                subs.append(curr.copy())
                 return
 
-            # skip
-            dfs(i + 1, curr)
-
-            # take nums[i]
+            # incluir nums[i]
             curr.append(nums[i])
-            dfs(i + 1, curr)
+            backtracking(i + 1, curr)
             curr.pop()
 
-        dfs(0, [])
-        return res
+            # no incluir 
+            backtracking(i + 1, curr)
+
+        backtracking(0, [])
+        return subs
+
+
+

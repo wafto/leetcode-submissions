@@ -3,12 +3,13 @@ class Solution:
         left, right = 0, len(numbers) - 1
 
         while left < right:
-            num = numbers[left] + numbers[right]
-            if num == target:
+            total = numbers[left] + numbers[right]
+            
+            if total == target:
                 return [left + 1, right + 1]
-            if num < target:
+            
+            if total < target:
                 left += 1
             else:
                 right -= 1
 
-        return []

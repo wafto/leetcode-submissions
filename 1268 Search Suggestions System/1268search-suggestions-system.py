@@ -17,7 +17,8 @@ class Trie:
             if c not in curr.children:
                 curr.children[c] = TrieNode()
             curr = curr.children[c]
-            curr.indexes.append(index)
+            if len(curr.indexes) < 3:
+                curr.indexes.append(index)
 
     def suggest(self, prefix: str) -> List[str]:
         curr = self.root
@@ -26,7 +27,7 @@ class Trie:
                 return []
             curr = curr.children[c]
         suggestions = []
-        for i in curr.indexes[:3]:
+        for i in curr.indexes:
             suggestions.append(self.words[i])
         return suggestions
             

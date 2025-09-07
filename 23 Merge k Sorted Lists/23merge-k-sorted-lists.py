@@ -3,30 +3,29 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
+
+class Comparator:
+    def __init__(self, node: ListNode):
+        self.node = node
+
+    def __lt__(self, other) -> bool:
+        return self.node.val < other.node.val
+
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        head = ListNode(0)
-        aux = head
-        
-        while True:
-            lowest = None
-            index = -1
+        nhead = curr = ListNode(-1)
+        minheap = []
 
-            for i in range(len(lists)):
-                if not lists[i]:
-                    continue
+        for node in lists:
+            if node:
+                heappush(minheap, Comparator(node))
 
-                if not lowest or lists[i].val < lowest.val:
-                    lowest = lists[i]
-                    index = i
-                
-            if not lowest:
-                break
-            else:
-                aux.next = lowest
-                aux = aux.next
-                lists[index] = lists[index].next
-        
-        return head.next
+        while minheap:
+            node = heappop(minheap).node
+            curr.next = node
+            curr = curr.next
+            if node.next:
+                heappush(minheap, Comparator(node.next))
 
-            
+        return nhead.next

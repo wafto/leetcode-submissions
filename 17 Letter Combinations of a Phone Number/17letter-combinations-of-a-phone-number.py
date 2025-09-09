@@ -1,7 +1,6 @@
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        ans = []
-        n = len(digits)
+        n, ans = len(digits), []
         mapping = {
             '2': ['a', 'b', 'c'],
             '3': ['d', 'e', 'f'],
@@ -13,18 +12,18 @@ class Solution:
             '9': ['w', 'x', 'y', 'z'], 
         }
 
-        if not n:
-            return ans
+        if n == 0:
+            return []
 
         def backtracking(i: int, curr: List[str]) -> None:
             if len(curr) == n:
                 ans.append(''.join(curr))
                 return
 
-            for ch in mapping[digits[i]]:
-                curr.append(ch)
-                backtracking(i + 1, curr)
+            for char in mapping[digits[i]]:
+                curr.append(char)
+                backtracking(i + 1, curr) 
                 curr.pop()
-        
+
         backtracking(0, [])
-        return ans
+        return ans        

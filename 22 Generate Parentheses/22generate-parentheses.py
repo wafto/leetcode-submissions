@@ -1,20 +1,25 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        combinations = []
+        ans = []
 
-        def backtracking(curr: List[str], left_cnt, right_cnt) -> None:
-            if len(curr) == 2 * n:
-                combinations.append(''.join(curr))
+        def backtracking(left: int, right: int, curr: List[str]) -> None:
+            if len(curr) == n * 2:
+                ans.append(''.join(curr))
                 return
-            
-            if left_cnt < n:
+
+            if left < n:
                 curr.append('(')
-                backtracking(curr, left_cnt + 1, right_cnt)
-                curr.pop()
-            if right_cnt < left_cnt:
-                curr.append(')')
-                backtracking(curr, left_cnt, right_cnt + 1)
+                backtracking(left + 1, right, curr)
                 curr.pop()
 
-        backtracking([], 0, 0)
-        return combinations       
+            if left > right:
+                curr.append(')')
+                backtracking(left, right + 1, curr)
+                curr.pop()
+
+        backtracking(0, 0, [])
+        return ans
+
+
+
+

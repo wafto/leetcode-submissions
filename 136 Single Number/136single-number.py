@@ -1,9 +1,8 @@
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
-        answer = nums[0]
+        ans = 0
 
-        for i in range(1, len(nums)):
-            answer ^= nums[i]
+        for num in nums:
+            ans ^= num
 
-        return answer
-        
+        return ans

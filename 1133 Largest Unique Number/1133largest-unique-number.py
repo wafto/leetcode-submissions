@@ -1,15 +1,15 @@
 class Solution:
     def largestUniqueNumber(self, nums: List[int]) -> int:
-        counter = defaultdict(int)
+        hashmap = defaultdict(int)
+
+        for num in nums:
+            hashmap[num] += 1
+
+        largest = -1
         
-        for n in nums:
-            counter[n] += 1
-            
-        largest = -1 
-        
-        for n, c in counter.items():
-            if c == 1:
-                largest = max(largest, n)
-            
+        for num, count in hashmap.items():
+            if count == 1:
+                largest = max(largest, num)
+
         return largest
-            
+        

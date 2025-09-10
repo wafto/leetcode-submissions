@@ -1,37 +1,20 @@
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        # rows
+        rows, cols, squares = set(), set(), set()
+
         for r in range(9):
-            freq = [0] * 9
             for c in range(9):
-                if board[r][c].isnumeric():
-                    freq[int(board[r][c]) - 1] += 1
-                    if freq[int(board[r][c]) - 1] > 1:
-                        return False
+                num = board[r][c]
 
-        # cols
-        for c in range(9):
-            freq = [0] * 9
-            for r in range(9):
-                if board[r][c].isnumeric():
-                    freq[int(board[r][c]) - 1] += 1
-                    if freq[int(board[r][c]) - 1] > 1:
-                        return False
+                if num == '.':
+                    continue
 
-        # squares
-        def valid_square(r: int, c: int) -> bool:
-            freq = [0] * 9
-            for i in range(r, r + 3):
-                for j in range(c, c + 3):
-                    if board[i][j].isnumeric():
-                        freq[int(board[i][j]) - 1] += 1
-                        if freq[int(board[i][j]) - 1] > 1:
-                            return False
-            return True
-
-        for r in range(0, 9, 3):
-            for c in range(0, 9, 3):
-                if not valid_square(r, c):
+                if (num, r) in rows or (num, c) in cols or (num, r // 3, c // 3) in squares:
                     return False
 
+                rows.add((num, r))
+                cols.add((num, c))
+                squares.add((num, r // 3, c // 3))
+
         return True
+        

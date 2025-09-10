@@ -1,26 +1,25 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
         
-        def digits(n: int) -> List[int]:
-            ans = []
-            while n > 0:
-                ans.append(n % 10)
-                n //= 10
-            return ans
+        def digits(num: int) -> List[int]:
+            answer = []
+            while num > 0:
+                answer.append(num % 10)
+                num //= 10
+            return answer
+
+        def squared_sum(num: int) -> int:
+            return sum([d * d for d in digits(num)])
 
         seen = set()
 
         while True:
-            acc = 0
-            for d in digits(n):
-                acc += d ** 2
-            if acc == 1:
+            n = squared_sum(n)
+            if n == 1:
                 return True
-            if acc in seen:
+            elif n not in seen:
+                seen.add(n)
+            else:
                 break
-            seen.add(acc)
-            n = acc
 
         return False
-            
-

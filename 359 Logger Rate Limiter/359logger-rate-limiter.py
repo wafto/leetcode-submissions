@@ -8,7 +8,7 @@ class Logger:
             return False
         self.ts[message] = timestamp
         return True
-
+        
 
 
 # Your Logger object will be instantiated and called as such:

@@ -1,30 +1,20 @@
 class Solution:
     def findRestaurant(self, list1: List[str], list2: List[str]) -> List[str]:
-        mp = { s: i for i, s in enumerate(list1) }
-        words = []
+        hashmap = {w: i for i, w in enumerate(list1)}
+        intersected = []
+        leastsum = float('inf')
 
-        for index, word in enumerate(list2):
-            if word in mp:
-                isum = index + mp[word]
-                words.append((isum, word))
+        for i, word in enumerate(list2):
+            if word in hashmap:
+                intersected.append((word, i + hashmap[word]))
+                leastsum = min(leastsum, i + hashmap[word])
 
-        if not words:
-            return []
+        answer = []
 
-        words.sort()
-        lowest = words[0][0]
+        for word, score in intersected:
+            if score == leastsum:
+                answer.append(word)
 
-        i = 0
-        output = []
+        return answer
 
-        while i < len(words):
-            if words[i][0] == lowest:
-                output.append(words[i][1])
-            else:
-                break
-            i += 1
-
-        return output
-
-        
         

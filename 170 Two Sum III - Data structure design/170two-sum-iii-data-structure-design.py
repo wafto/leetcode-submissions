@@ -1,19 +1,19 @@
 class TwoSum:
 
     def __init__(self):
-        self.nums = []        
+        self.hashmap = defaultdict(int)
 
     def add(self, number: int) -> None:
-        self.nums.append(number)
-
+        self.hashmap[number] += 1
+        
     def find(self, value: int) -> bool:
-        hashset = set()
-        for num in self.nums:
-            if value - num in hashset:
+        for num, count in self.hashmap.items():
+            diff = value - num
+            if num != diff and diff in self.hashmap:
                 return True
-            hashset.add(num)
+            if num == diff and self.hashmap[num] > 1:
+                return True
         return False
-            
 
 
 # Your TwoSum object will be instantiated and called as such:

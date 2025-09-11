@@ -6,24 +6,22 @@
 #         self.right = right
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        ans = []
+        hashmap = defaultdict(list)
+        levels = []
 
-        queue = deque()
+        def dfs(node: Optional[TreeNode], level: int) -> int:
+            if not node:
+                return level
+            hashmap[level].append(node.val)
+            return max(dfs(node.left, level + 1), dfs(node.right, level + 1))
 
-        if root:
-            queue.append(root)
+        maxlevel = dfs(root, 0)
 
-        while queue:
-            level = []        
-            for _ in range(len(queue)):
-                node = queue.popleft()
-                level.append(node.val)
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-            ans.append(level)
+        for i in range(maxlevel):
+            levels.append(hashmap[i])
 
-        return ans
+        return levels
+
+            
 
 

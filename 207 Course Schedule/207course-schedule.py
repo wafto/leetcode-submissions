@@ -2,8 +2,8 @@ class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         graph = {i: [] for i in range(numCourses)}
 
-        for course, prereq in prerequisites:
-            graph[course].append(prereq)
+        for a, b in prerequisites:
+            graph[a].append(b)
 
         def dfs(course: int, seen: Set[int]) -> bool:
             if course in seen:
@@ -14,12 +14,13 @@ class Solution:
 
             seen.add(course)
 
-            for neighbor in graph[course]:
-                if not dfs(neighbor, seen):
+            for prereq in graph[course]:
+                if not dfs(prereq, seen):
                     return False
 
             seen.remove(course)
             graph[course] = []
+
             return True
 
         for course in range(numCourses):
@@ -27,7 +28,3 @@ class Solution:
                 return False
 
         return True
-
-
-
-            

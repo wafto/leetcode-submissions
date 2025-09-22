@@ -8,9 +8,7 @@ class Solution:
                 stack.append(c)
             elif not stack:
                 return False
-            elif mapping[stack[-1]] != c:
+            elif mapping[stack.pop()] != c:
                 return False
-            else:
-                stack.pop()
 
         return len(stack) == 0

@@ -10,33 +10,31 @@ from typing import Optional
 
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        if not node:
-            return None
+        graph = {}
 
-        graph = defaultdict(list)
-        queue = deque([node])
-        visited = set([node])
+        def dfs(node, seen = set()):
+            if not node or node.val in seen:
+                return
 
-        while queue:
-            node = queue.popleft()
+            graph[node.val] = []
+            seen.add(node.val)
 
-            if node.val not in graph:
-                graph[node.val] = []
+            for neighbor in node.neighbors:
+                graph[node.val].append(neighbor.val)
+                dfs(neighbor, seen)
+
+        dfs(node)
+
+        copy = {key: Node(key) for key in graph.keys()}
+        head = None
+
+        for key in copy.keys():
+            if head is None:
+                head = copy[key]
+            copy[key].neighbors = [copy[nkey] for nkey in graph[key]]
+
+        return head
+                
+
+
             
-            for child in node.neighbors:
-                graph[node.val].append(child.val)
-                if child in visited:
-                    continue
-                visited.add(child)
-                queue.append(child)
-
-        nodes = {i: Node(i) for i in range(1, len(graph) + 1)}
-
-        for node in nodes.values():
-            for child in graph[node.val]:
-                node.neighbors.append(nodes[child])
-
-        return nodes[1] if nodes else None
-
-
-        

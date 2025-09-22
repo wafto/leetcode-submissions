@@ -4,12 +4,11 @@ class Solution:
         answer = [0] * n
         stack = []
 
-        for i, temp in enumerate(temperatures):
-            while stack and temperatures[stack[-1]] < temp:
+        for i in range(n):
+            while stack and temperatures[stack[-1]] < temperatures[i]:
                 j = stack.pop()
                 answer[j] = i - j
 
             stack.append(i)
-
+        
         return answer
-

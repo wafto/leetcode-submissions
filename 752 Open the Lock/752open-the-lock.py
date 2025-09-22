@@ -1,31 +1,56 @@
 class Solution:
     def openLock(self, deadends: List[str], target: str) -> int:
-        if '0000' in deadends:
-            return -1
+        deadends = set(deadends)
 
-        def next_posibilities(node: str) -> List[str]:
+        graph = {
+            '0': ['9', '1'],
+            '1': ['0', '2'],
+            '2': ['1', '3'],
+            '3': ['2', '4'],
+            '4': ['3', '5'],
+            '5': ['4', '6'],
+            '6': ['5', '7'],
+            '7': ['6', '8'],
+            '8': ['7', '9'],
+            '9': ['8', '0'],
+        }
+
+        def posibilities(lock: str) -> List[str]:
             ans = []
             for i in range(4):
-                num = int(node[i])
-                for change in [-1, 1]:
-                    x = (num + change) % 10
-                    ans.append(node[:i] + str(x) + node[i + 1:])
+                copy = list(lock)
+                for neighbor in graph[lock[i]]:
+                    copy[i] = neighbor
+                    tmp = ''.join(copy)
+                    if tmp in deadends:
+                        continue
+                    ans.append(tmp)
             return ans
 
+        def bfs(current: str) -> int:
+            steps = 0
+            queue = deque()
+            seen = set()
 
-        seen = set(deadends)
-        queue = deque([('0000', 0)])
+            if current not in deadends:
+                queue.append(current)
+                seen.add(current)
 
-        while queue:
-            node, turns = queue.popleft()
-            
-            if node == target:
-                return turns
+            while queue:
+                for _ in range(len(queue)):
+                    last = queue.popleft()
 
-            for nxt in next_posibilities(node):
-                if nxt not in seen:
-                    queue.append((nxt, turns + 1))
-                    seen.add(nxt)
+                    if last == target:
+                        return steps
 
-        return -1
+                    for posibility in posibilities(last):
+                        if posibility in seen:
+                            continue
+                        seen.add(posibility)
+                        queue.append(posibility)
 
+                steps += 1
+
+            return -1
+
+        return bfs('0000')

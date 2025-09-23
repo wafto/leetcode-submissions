@@ -1,12 +1,20 @@
 class Solution:
     def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
-        seen = {0}
+        n = len(rooms)
+        graph = {i: rooms[i] for i in range(n)}
+        seen = set([0])
+        queue = deque([0])
 
-        def dfs(node: int):
-            for room in rooms[node]:
-                if room not in seen:
-                    seen.add(room)
-                    dfs(room)
+        while queue:
+            node = queue.popleft()
+            for neighbor in graph[node]:
+                if neighbor in seen:
+                    continue
+                seen.add(neighbor)
+                queue.append(neighbor)
 
-        dfs(0)
-        return len(seen) == len(rooms)
+        return len(seen) == n
+
+
+
+        

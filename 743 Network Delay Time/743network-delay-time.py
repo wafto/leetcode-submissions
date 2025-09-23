@@ -9,16 +9,19 @@ class Solution:
         shortest = {}
 
         while minheap:
-            weight, node = heapq.heappop(minheap)
+            weight, node = heappop(minheap)
 
             if node in shortest:
                 continue
 
             shortest[node] = weight
 
-            for nei_node, nei_weight in graph[node]:
-                if nei_node not in shortest:
-                    heapq.heappush(minheap, (weight + nei_weight, nei_node))
+            for nnode, nweight in graph[node]:
+                if nnode in shortest:
+                    continue
+                heappush(minheap, (nweight + weight, nnode))
 
-        return -1 if len(shortest) != n else max(shortest.values())
+        if len(shortest) < n:
+            return -1
 
+        return max(shortest.values())

@@ -3,9 +3,13 @@ class Solution:
         heap = []
 
         for x, y in points:
-            distance = x ** 2 + y ** 2
-            heapq.heappush(heap, (-distance, [x, y]))
-            if len(heap) > k:
-                heapq.heappop(heap)
+            heappush(heap, (sqrt(x * x + y * y), x, y))
 
-        return [p[1] for p in heap] 
+        ans = []
+
+        for _ in range(min(k, len(heap))):
+            _, x, y = heappop(heap)
+            ans.append([x, y])
+
+        return ans
+

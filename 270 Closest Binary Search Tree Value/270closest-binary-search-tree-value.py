@@ -6,25 +6,21 @@
 #         self.right = right
 class Solution:
     def closestValue(self, root: Optional[TreeNode], target: float) -> int:
-        closest = float('inf')
-        cnode = None
-        queue = deque([root])
+        closest = root.val
+        curr = root
 
-        while queue:
-            node = queue.popleft()
-            diff = abs(node.val - target)
+        while curr:
+            currdiff = abs(curr.val - target)
+            closestdiff = abs(closest - target)
 
-            if diff == closest:
-                cnode = cnode if cnode.val < node.val else node 
+            if currdiff < closestdiff:
+                closest = curr.val
+            elif currdiff == closestdiff and curr.val < closest:
+                closest = curr.val
 
-            if diff < closest:
-                closest = diff
-                cnode = node
-    
-            if node.left:
-                queue.append(node.left)
+            if target < curr.val:
+                curr = curr.left
+            else:
+                curr = curr.right
 
-            if node.right:
-                queue.append(node.right)
-
-        return cnode.val if cnode else root.val
+        return closest

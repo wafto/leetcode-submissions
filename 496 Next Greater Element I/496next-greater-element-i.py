@@ -3,14 +3,11 @@ class Solution:
         stack = []
         mapping = {}
 
-        for num in nums2:
-            while stack and stack[-1] < num:
-                n = stack.pop()
-                mapping[n] = num
-            stack.append(num)
+        for i, num in enumerate(nums2):
+            while stack and nums2[stack[-1]] < num:
+                j = stack.pop()
+                mapping[nums2[j]] = num
+            stack.append(i)
 
-        ans = []
-        for num in nums1:
-            ans.append(mapping.get(num, -1))
-
-        return ans
+        return [mapping.get(n, -1) for n in nums1]
+            

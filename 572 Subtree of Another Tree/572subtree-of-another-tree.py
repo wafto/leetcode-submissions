@@ -10,26 +10,24 @@ class Solution:
         def same(a: Optional[TreeNode], b: Optional[TreeNode]) -> bool:
             if not a and not b:
                 return True
-
+            
             if not a or not b:
                 return False
 
             return a.val == b.val and same(a.left, b.left) and same(a.right, b.right)
 
-        if not subRoot:
-            return True
+        queue = deque([root])
 
-        if not root:
-            return False
+        while queue:
+            node = queue.popleft()
 
-        def subtree(node: Optional[TreeNode]) -> bool:
-            if not node:
-                return False
-
-            if node.val == subRoot.val and same(node, subRoot):
+            if same(node, subRoot):
                 return True
 
-            return subtree(node.left) or subtree(node.right)
+            if node.left:
+                queue.append(node.left)
 
-        return subtree(root)
+            if node.right:
+                queue.append(node.right)
 
+        return False

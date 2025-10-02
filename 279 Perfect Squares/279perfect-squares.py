@@ -1,29 +1,24 @@
 class Solution:
     def numSquares(self, n: int) -> int:
-        squares = []
+        squares = [num ** 2 for num in range(1, n + 1) if num ** 2 <= n]
 
-        for i in range(1, n + 1):
-            num = i ** 2
-            if num <= n:
-                squares.append(num)
-            elif num > n:
-                break
-        
-        queue = deque(squares)
-        seen = set(squares)
-        steps = 1
+        @cache
+        def dp(num: int) -> int:
+            if num in squares:
+                return 1
 
-        while queue:
-            for _ in range(len(queue)):
-                current = queue.popleft()
+            best = n + 1
+            
+            for square in squares:
+                diff = num - square
+                
+                if diff <= 0:
+                    break
+                
+                best = min(best, dp(diff) + 1)
+                
+            return best
 
-                if current == n:
-                    return steps
+        return dp(n)
 
-                for square in squares:
-                    total = square + current
-                    if total <= n and total not in seen:
-                        queue.append(total)
-                        seen.add(total)
 
-            steps += 1

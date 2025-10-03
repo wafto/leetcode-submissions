@@ -1,33 +1,30 @@
 class Solution:
     def shortestAlternatingPaths(self, n: int, redEdges: List[List[int]], blueEdges: List[List[int]]) -> List[int]:
-        RED = 0
-        BLUE = 1
-        
-        ans = [float('inf')] * n
-        graph = {RED: defaultdict(list), BLUE: defaultdict(list)}
+        blue, red = 0, 1
+        graph = [defaultdict(list), defaultdict(list)]
 
         for u, v in redEdges:
-            graph[RED][u].append(v)
+            graph[red][u].append(v)
 
         for u, v in blueEdges:
-            graph[BLUE][u].append(v)
+            graph[blue][u].append(v)
 
-        queue = deque([(0, RED, 0), (0, BLUE, 0)]) # (node, color, steps)
-        seen = {(0, RED), (0, BLUE)}
+        queue = deque([(0, 0, blue), (0, 0, red)]) # (steps, node, color)
+        visited = set([(0, 0, blue), (0, 0, red)])
+        shortest = [float('inf')] * n
 
         while queue:
-            node, color, steps = queue.popleft()
-            ans[node] = min(ans[node], steps)
+            steps, node, color = queue.popleft()
+            
+            shortest[node] = min(shortest[node], steps)
 
-            for neighbor in graph[color][node]:
-                if (neighbor, 1 - color) in seen:
+            for nei in graph[color][node]:
+                if (nei, 1 - color) in visited:
                     continue
-                queue.append((neighbor, 1 - color, steps + 1))
-                seen.add((neighbor, 1 - color))
+                queue.append((steps + 1, nei, 1 - color))
+                visited.add((nei, 1 - color))
+        
+        for i in range(len(shortest)):
+            shortest[i] = -1 if shortest[i] == float('inf') else shortest[i]
 
-        for i in range(n):
-            if ans[i] == float('inf'):
-                ans[i] = -1
-
-        return ans    
-
+        return shortest

@@ -5,7 +5,7 @@ class Solution:
         def backtracking(left: int, right: int, curr: List[str]) -> None:
             if len(curr) == n * 2:
                 ans.append(''.join(curr))
-                return
+                return 
 
             if left < n:
                 curr.append('(')
@@ -19,7 +19,3 @@ class Solution:
 
         backtracking(0, 0, [])
         return ans
-
-
-
-

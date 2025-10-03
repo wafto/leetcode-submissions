@@ -1,17 +1,18 @@
 class Solution:
     def trap(self, height: List[int]) -> int:
-        left, right = 0, len(height) - 1
-        maxLeft, maxRight = height[0], height[len(height) - 1]
-        output = 0
+        n = len(height)
 
-        while left < right:
-            if maxLeft < maxRight:
-                left += 1
-                maxLeft = max(maxLeft, height[left])
-                output += maxLeft - height[left]
-            else:
-                right -= 1
-                maxRight = max(maxRight, height[right])
-                output += maxRight - height[right]
+        left = [0] * n # max left
+        for i in range(1, n):
+            left[i] = max(left[i - 1], height[i - 1])
 
-        return output
+        right = [0] * n # max right
+        for i in range(n - 2, -1, -1):
+            right[i] = max(right[i + 1], height[i + 1])
+
+        ans = 0
+        for i in range(n):
+            minimum = min(left[i], right[i])
+            ans += max(0, minimum - height[i])
+
+        return ans
